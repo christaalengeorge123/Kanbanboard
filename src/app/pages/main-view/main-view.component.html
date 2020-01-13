@@ -1,0 +1,57 @@
+<div class="root">
+    <div class="navbar has-background-dark">
+      <div class="navbar-brand">
+        <div class="navbar-item">
+          <h1 class="app-name has-gradient-text">kanban</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="board">
+        <div class="board-bar">
+            <p class="board-name">Board Name</p>
+        </div>
+        <div class="board-wrapper">
+            <div class="board-columns" cdkDropListGroup>
+                <div class="board-column" *ngFor="let column of board.columns">
+                        
+                    <div class="column-title">
+                         {{column.name}}
+                     </div>
+                    
+                     cdkDropList
+                       
+                        [cdkDropListData]="column.tasks"
+                         <div class="tasks-container"
+                        (cdkDropListDropped)="drop($event)">
+
+                         <div class="task"  *ngFor="let item of column.tasks" cdkDrag>
+                            
+                            <input #updateCardInput type="text"  (keyup.enter)="onEnterUpdate(updateCardInput.value, item); updateCardInput.value=''; item.edit=false;"  *ngIf="item.edit" autofocus>
+
+                            <div class="taskItem">
+                                <div class="taskText" (click)="toggleDisplayupdateCard(item);">{{item.name}}</div>
+                                <div class="taskDelete">
+                                    <button class="delete is-small" (click)="alertFunction(item.name,column.name)"></button> 
+                                     <!-- deletecard(item.name,column.name) -->
+                                </div>
+                                    
+                            </div>
+                                     
+                         </div>
+
+                         <div class="addcard" *ngIf="column.name=='Ideas'">
+                         <input #addCardInput type="text"  (keyup.enter)="onEnter(addCardInput.value); addCardInput.value=''; displayAddCard=false;"  *ngIf="displayAddCard" autofocus>
+
+                         <a href="#" class="list__newcard" (click)="toggleDisplayAddCard();" >Add a card...</a>
+                         </div>
+                        </div>
+
+                </div>
+                
+                
+                    
+
+            </div>
+        </div>
+    </div>
